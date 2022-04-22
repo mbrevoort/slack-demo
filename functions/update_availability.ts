@@ -17,7 +17,7 @@ const update_availability: FunctionHandler<any, any> = async ({ inputs, token })
 
   return await {
     outputs: {
-      unavailability: `${name} has ${status}, ${when}`,
+      unavailability: `${name} has ${status},, ${when}`,
     },
   };
 };

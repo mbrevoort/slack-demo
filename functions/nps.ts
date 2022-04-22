@@ -11,8 +11,6 @@ const nps: FunctionHandler<any, any> = async ({ inputs, token }) => {
   const result: any = await client.apiCall('users.info', { user });
   const name = result.user.real_name;
 
-  console.log("cool")
-
   return await {
     outputs: {
       confirmation: `${name} reported a Net Promoter Score (NPS) of ${score}`,
