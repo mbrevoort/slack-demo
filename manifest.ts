@@ -1,43 +1,8 @@
-import { DefineFunction, Manifest, Schema } from "deno-slack-sdk/mod.ts";
-
-const UpdateAvailabilityFunction = DefineFunction({
-  callback_id: "update_availability",
-  title: "Update Availability",
-  description: "Updates a team members availability",
-  source_file: "functions/update_availability.ts",
-  input_parameters: {
-    properties: {
-      person: {
-        type: Schema.slack.types.user_id,
-        description: "Who will be unavailable",
-      },
-      when: {
-        type: Schema.types.string,
-        name: "When",
-        description: "Provide a date like 4/20/2022",
-      },
-      status: {
-        type: Schema.types.string,
-        enum: ["PTO", "Busy"],
-      },
-    },
-    required: ["person", "when", "status"],
-  },
-  output_parameters: {
-    properties: {
-      unavailability: {
-        type: Schema.types.string,
-        description: "Details of unavailability",
-      },
-    },
-    required: ["unavailability"],
-  },
-});
-
+import { DefineFunction, DefineDatastore, Manifest, Schema } from "deno-slack-sdk/mod.ts";
 
 const NpsFunction = DefineFunction({
   callback_id: "nps",
-  title: "NPS",
+  title: "NPS Survey",
   description: "Net promoter score survey",
   source_file: "functions/nps.ts",
   input_parameters: {
@@ -63,11 +28,31 @@ const NpsFunction = DefineFunction({
   },
 });
 
+const NpsScoresDatastore = DefineDatastore({
+  name: "nps_scores",
+  primary_key: "id",
+  attributes: {
+    id: {
+      type: Schema.types.string
+    },
+    user: {
+      type: Schema.slack.types.user_id
+    },
+    score: {
+      type: Schema.types.string
+    },
+    created: {
+      type:Schema.types.string
+    }
+  },
+});
+
 export default Manifest({
   name: "Teamwork",
   description: "Team work makes the dream work",
   icon: "assets/roo.png",
-  functions: [UpdateAvailabilityFunction, NpsFunction],
+  functions: [NpsFunction],
+  datastores: [NpsScoresDatastore],
   outgoingDomains: [],
   botScopes: ["commands", "users:read", "users:read.email"],
 });
