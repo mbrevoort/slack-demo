@@ -22,7 +22,7 @@ const nps: FunctionHandler<any, any> = async ({ inputs, token }) => {
 
   return await {
     outputs: {
-      // confirmation: `${name} reported a Net Promoter Score (NPS) of ${score}`,
+      // confirmation: `${name} reportd a Net Promoter Score (NPS) of ${score}`,
     },
   };
 };
