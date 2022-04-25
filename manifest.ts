@@ -4,7 +4,7 @@ const NpsFunction = DefineFunction({
   callback_id: "nps",
   title: "NPS Survey",
   description: "Net promoter score survey",
-  source_file: "functions/nps.ts",
+  source_file: "functions/survey.ts",
   input_parameters: {
     properties: {
       user: {
